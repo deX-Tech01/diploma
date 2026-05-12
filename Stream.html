@@ -1,0 +1,670 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Audio Learning Hub</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      body {
+        background: linear-gradient(135deg, #0f172a, #111827, #312e81);
+        color: white;
+        min-height: 100vh;
+        padding: 40px;
+      }
+
+      .container {
+        width: 90%;
+        max-width: 1200px;
+        margin: auto;
+      }
+
+      .hero {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 25px;
+        padding: 50px;
+        backdrop-filter: blur(10px);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 40px;
+        flex-wrap: wrap;
+      }
+
+      .hero-text {
+        flex: 1;
+      }
+
+      .badge {
+        display: inline-block;
+        padding: 10px 18px;
+        background: rgba(99, 102, 241, 0.2);
+        border: 1px solid rgba(99, 102, 241, 0.4);
+        border-radius: 30px;
+        margin-bottom: 20px;
+        color: #c7d2fe;
+        font-size: 14px;
+      }
+
+      .hero h1 {
+        font-size: 55px;
+        line-height: 1.1;
+        margin-bottom: 20px;
+      }
+
+      .hero p {
+        color: #cbd5e1;
+        font-size: 18px;
+        line-height: 1.7;
+        max-width: 600px;
+      }
+
+      .buttons {
+        margin-top: 30px;
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        padding: 14px 25px;
+        border: none;
+        border-radius: 15px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: 0.3s;
+        text-decoration: none;
+        display: inline-block;
+      }
+
+      .btn-primary {
+        background: #6366f1;
+        color: white;
+      }
+
+      .btn-primary:hover {
+        background: #4f46e5;
+      }
+
+      .btn-secondary {
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: white;
+      }
+
+      .btn-secondary:hover {
+        background: rgba(255, 255, 255, 0.15);
+      }
+
+      .music-card {
+        width: 320px;
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 25px;
+        padding: 25px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .music-cover {
+        width: 100%;
+        height: 260px;
+        border-radius: 25px;
+        background: linear-gradient(135deg, #6366f1, #a855f7, #ec4899);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 80px;
+      }
+
+      .music-card h2 {
+        margin-top: 20px;
+        margin-bottom: 10px;
+      }
+
+      .progress {
+        width: 100%;
+        height: 8px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        overflow: hidden;
+        margin-top: 20px;
+      }
+
+      .progress-bar {
+        width: 70%;
+        height: 100%;
+        background: linear-gradient(to right, #818cf8, #c084fc);
+      }
+
+      .time {
+        display: flex;
+        justify-content: space-between;
+        color: #cbd5e1;
+        margin-top: 10px;
+        font-size: 14px;
+      }
+
+      .controls {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin-top: 25px;
+      }
+
+      .control-btn {
+        width: 55px;
+        height: 55px;
+        border-radius: 50%;
+        border: none;
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        font-size: 20px;
+        cursor: pointer;
+      }
+
+      .play-btn {
+        width: 70px;
+        height: 70px;
+        background: white;
+        color: black;
+        font-size: 25px;
+      }
+
+      .search-section {
+        margin-top: 40px;
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+
+      .search-box input {
+        width: 350px;
+        max-width: 100%;
+        padding: 15px;
+        border: none;
+        border-radius: 15px;
+        background: rgba(255, 255, 255, 0.08);
+        color: white;
+        outline: none;
+      }
+
+      .audio-grid {
+        margin-top: 40px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 25px;
+      }
+
+      .audio-card {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 25px;
+        padding: 25px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: 0.3s;
+      }
+
+      .audio-card:hover {
+        transform: translateY(-5px);
+        border-color: #818cf8;
+      }
+
+      .audio-top {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+      }
+
+      .audio-icon {
+        width: 65px;
+        height: 65px;
+        border-radius: 18px;
+        background: linear-gradient(135deg, #6366f1, #a855f7);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 28px;
+      }
+
+      .audio-info h3 {
+        margin-bottom: 6px;
+      }
+
+      .audio-info p {
+        color: #cbd5e1;
+        font-size: 14px;
+      }
+
+      audio {
+        width: 100%;
+        margin-top: 20px;
+      }
+
+      .audio-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+      }
+
+      .features {
+        margin-top: 70px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 25px;
+      }
+
+      .feature-box {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 35px;
+        border-radius: 25px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .feature-box h3 {
+        margin: 15px 0;
+      }
+
+      .feature-box p {
+        color: #cbd5e1;
+        line-height: 1.6;
+      }
+
+      footer {
+        margin-top: 70px;
+        text-align: center;
+        color: #94a3b8;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding-top: 30px;
+      }
+
+      @media (max-width: 768px) {
+        .hero h1 {
+          font-size: 40px;
+        }
+
+        .hero {
+          padding: 30px;
+        }
+
+        body {
+          padding: 20px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <!-- HERO SECTION -->
+      <div class="hero">
+        <div class="hero-text">
+          <div class="badge">🎧 Diploma Learning Platform</div>
+
+          <h1>Listen to Lecture Recordings</h1>
+
+          <p>
+            Stream educational recordings, and revision lectures anytime.
+            Students can also download audio files for offline listening.
+          </p>
+
+          <div class="buttons">
+            <a href="#" class="btn btn-primary"> Explore Library </a>
+
+            <a href="#" class="btn btn-secondary"> Upload Recording </a>
+          </div>
+        </div>
+
+        <div class="music-card">
+          <div class="music-cover">🎵</div>
+
+          <h2>Study Session</h2>
+
+          <p style="color: #cbd5e1">Relax and Listen To Lecture Recordings</p>
+
+          <div class="progress">
+            <div class="progress-bar"></div>
+          </div>
+
+          <div class="time">
+            <span>12:21</span>
+            <span>18:00</span>
+          </div>
+
+          <div class="controls">
+            <button class="control-btn">⏮</button>
+            <button class="control-btn play-btn">▶</button>
+            <button class="control-btn">⏭</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEARCH -->
+      <div class="search-section">
+        <div class="search-box">
+          <input type="text" placeholder="Search lectures or music..." />
+        </div>
+
+        <div class="buttons">
+          <button class="btn btn-primary">All</button>
+          <button class="btn btn-secondary">Lectures</button>
+        </div>
+      </div>
+
+      <!-- AUDIO GRID -->
+      <div class="audio-grid">
+        <!-- CARD 1 -->
+        <div class="audio-card">
+          <div class="audio-top">
+            <div class="audio-icon">🎙</div>
+
+            <div class="audio-info">
+              <h3>Legal Method - NATURE and Functions of Law in Society</h3>
+              <p>Lecture Recording • 39 mins</p>
+            </div>
+          </div>
+
+          <audio controls>
+            <source
+              src="/5Gfiles/Recordings/Legal Method - NATURE and Functions of Law in Society.mp3"
+              type="audio/mp3"
+            />
+          </audio>
+
+          <div class="audio-buttons">
+            <button class="btn btn-primary">Listen</button>
+
+            <a
+              href="./5Gfiles/Recordings/Legal Method - NATURE and Functions of Law in Society.mp3"
+              download
+              class="btn btn-secondary"
+            >
+              Download
+            </a>
+          </div>
+        </div>
+
+        <!-- CARD 2 -->
+        <div class="audio-card">
+          <div class="audio-top">
+            <div class="audio-icon">🎶</div>
+
+            <div class="audio-info">
+              <h3>Legal Method - Definition of Law 1</h3>
+              <p>Class Recording • 30 mins</p>
+            </div>
+          </div>
+
+          <audio controls>
+            <source
+              src="./5Gfiles/Recordings/Legal Methode - Definition of Law.mp3"
+              type="audio/mp3"
+            />
+          </audio>
+
+          <div class="audio-buttons">
+            <button class="btn btn-primary">Listen</button>
+
+            <a
+              href="./5Gfiles/Recordings/Legal Methode - Definition of Law 1.mp3"
+              download
+              class="btn btn-secondary"
+            >
+              Download
+            </a>
+          </div>
+        </div>
+
+        <!-- CARD 3 -->
+        <div class="audio-card">
+          <div class="audio-top">
+            <div class="audio-icon">🎙</div>
+
+            <div class="audio-info">
+              <h3>Legal Method - Definition of Law 2</h3>
+              <p>Lecture Recording • 21 mins</p>
+            </div>
+          </div>
+
+          <audio controls>
+            <source
+              src="./5Gfiles/Recordings/Legal Method - Definition of Law 2.mp3"
+              type="audio/mp3"
+            />
+          </audio>
+
+          <div class="audio-buttons">
+            <button class="btn btn-primary">Listen</button>
+
+            <a
+              href="./5Gfiles/Recordings/Legal Method - Definition of Law 2.mp3"
+              download
+              class="btn btn-secondary"
+            >
+              Download
+            </a>
+          </div>
+        </div>
+                <!-- CARD 3 -->
+        <div class="audio-card">
+          <div class="audio-top">
+            <div class="audio-icon">🎙</div>
+
+            <div class="audio-info">
+              <h3>Legal Method - Definition of Law 2</h3>
+              <p>Lecture Recording • 21 mins</p>
+            </div>
+          </div>
+
+          <audio controls>
+            <source
+              src="./5Gfiles/Recordings/Legal Method - Definition of Law 2.mp3"
+              type="audio/mp3"
+            />
+          </audio>
+
+          <div class="audio-buttons">
+            <button class="btn btn-primary">Listen</button>
+
+            <a
+              href="./5Gfiles/Recordings/Legal Method - Definition of Law 2.mp3"
+              download
+              class="btn btn-secondary"
+            >
+              Download
+            </a>
+          </div>
+        </div>
+                <!-- CARD 4 -->
+        <div class="audio-card">
+          <div class="audio-top">
+            <div class="audio-icon">🎙</div>
+
+            <div class="audio-info">
+              <h3>Legal Method - Intoduction to Law of Torts</h3>
+              <p>Lecture Recording • 31 mins</p>
+            </div>
+          </div>
+
+          <audio controls>
+            <source
+              src="./5Gfiles/Recordings/Legal Method - Intoduction to LoT.mp3"
+              type="audio/mp3"
+            />
+          </audio>
+
+          <div class="audio-buttons">
+            <button class="btn btn-primary">Listen</button>
+
+            <a
+              href="./5Gfiles/Recordings/Legal Method - Intoduction to LoT.mp3"
+              download
+              class="btn btn-secondary"
+            >
+              Download
+            </a>
+          </div>
+        </div>
+                <!-- CARD 5 -->
+        <div class="audio-card">
+          <div class="audio-top">
+            <div class="audio-icon">🎙</div>
+
+            <div class="audio-info">
+              <h3>Nature and Sources of Criminal Law</h3>
+              <p>Lecture Recording • 1hr</p>
+            </div>
+          </div>
+
+          <audio controls>
+            <source
+              src="./5Gfiles/Recordings/Nature and Sources of Criminal Law.mp3"
+              type="audio/mp3"
+            />
+          </audio>
+
+          <div class="audio-buttons">
+            <button class="btn btn-primary">Listen</button>
+
+            <a
+              href="./5Gfiles/Recordings/Nature and Sources of Criminal Law.mp3"
+              download
+              class="btn btn-secondary"
+            >
+              Download
+            </a>
+          </div>
+        </div>
+                        <!-- CARD 6 -->
+        <div class="audio-card">
+          <div class="audio-top">
+            <div class="audio-icon">🎙</div>
+
+            <div class="audio-info">
+              <h3>Meaning and Nature of Law of Evidence</h3>
+              <p>Lecture Recording • 1hr</p>
+            </div>
+          </div>
+
+          <audio controls>
+            <source
+              src="./5Gfiles/Recordings/Meaning and Nature of Law of Evidence.mp3"
+              type="audio/mp3"
+            />
+          </audio>
+
+          <div class="audio-buttons">
+            <button class="btn btn-primary">Listen</button>
+
+            <a
+              href="./5Gfiles/Recordings/Meaning and Nature of Law of Evidence.mp3"
+              download
+              class="btn btn-secondary"
+            >
+              Download
+            </a>
+          </div>
+        </div>
+                        <!-- CARD 7 -->
+        <div class="audio-card">
+          <div class="audio-top">
+            <div class="audio-icon">🎙</div>
+
+            <div class="audio-info">
+              <h3>Land Law - Ownership and Possession of Land</h3>
+              <p>Lecture Recording • 1hr</p>
+            </div>
+          </div>
+
+          <audio controls>
+            <source
+              src="./5Gfiles/Recordings/Land Law - Ownership.Possession of Land.mp3"
+              type="audio/mp3"
+            />
+          </audio>
+
+          <div class="audio-buttons">
+            <button class="btn btn-primary">Listen</button>
+
+            <a
+              href="./5Gfiles/Recordings/Land Law - Ownership.Possession of Land.mp3"
+              download
+              class="btn btn-secondary"
+            >
+              Download
+            </a>
+          </div>
+        </div>
+                        <!-- CARD 8 -->
+        <div class="audio-card">
+          <div class="audio-top">
+            <div class="audio-icon">🎙</div>
+
+            <div class="audio-info">
+              <h3>Land Law - Land Tenure System</h3>
+              <p>Lecture Recording • 1hr</p>
+            </div>
+          </div>
+
+          <audio controls>
+            <source
+              src="./5Gfiles/Recordings/Land Tenure System.mp3"
+              type="audio/mp3"
+            />
+          </audio>
+
+          <div class="audio-buttons">
+            <button class="btn btn-primary">Listen</button>
+
+            <a
+              href="./5Gfiles/Recordings/Land Tenure System.mp3"
+              download
+              class="btn btn-secondary"
+            >
+              Download
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- FEATURES -->
+      <div class="features">
+        <div class="feature-box">
+          <div style="font-size: 45px">📚</div>
+          <h3>Lecture Archive</h3>
+          <p>
+            Upload and organize lecture recordings for students to access
+            anytime.
+          </p>
+        </div>
+
+        <div class="feature-box">
+          <div style="font-size: 45px">⚡</div>
+          <h3>Fast Streaming</h3>
+          <p>
+            Stream lecture recordings online without interruptions.
+          </p>
+        </div>
+
+        <div class="feature-box">
+          <div style="font-size: 45px">⬇</div>
+          <h3>Offline Downloads</h3>
+          <p>
+            Students can download recordings and listen later without internet.
+          </p>
+        </div>
+      </div>
+
+      <!-- FOOTER -->
+      <footer>
+        © 2026 Diploma Support • Built for smarter learning.
+      </footer>
+    </div>
+  </body>
+</html>
