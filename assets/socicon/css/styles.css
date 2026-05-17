@@ -982,6 +982,11 @@ button {
   padding: 20px;
   border-radius: 20px;
   box-shadow: 0px 4px 30px rgb(123, 103, 103);
+  transition: transform 0.5s ease;
+}
+.feature1:hover {
+transform: translateY(-30px);
+background: rgb(67, 185, 67);
 }
 .feature1 p{
     text-align: center;
@@ -990,3 +995,20 @@ button {
     font-weight: bold;
 }
 
+.school-image {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
